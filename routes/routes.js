@@ -1,22 +1,33 @@
 const express = require('express');
 const router = express.Router();
 const Model = require('../models/model');
+const Education = require('../models/Education');
 
-//Post Method
-router.post('/post', async (req, res) => {
-    const data = new Model({
-        name: req.body.name,
-        age: req.body.age
-    })
+//Post Methods
+
+//Education
+router.post('/education', async (req, res) => {
+    const { institution, url, type, major, area, startDate, endDate } = req.body;
+
+    const newEducation = new Education({
+        institution,
+        url,
+        type,
+        major,
+        area,
+        startDate: new Date(startDate),
+        endDate: endDate === "Ongoing" ? endDate : new Date(endDate), // Convert endDate to Date if not "Ongoing"
+    });
 
     try {
-        const dataToSave = await data.save();
-        res.status(200).json(dataToSave)
+        const savedEducation = await newEducation.save();
+        res.status(201).json(savedEducation)
     }
     catch (error) {
         res.status(400).json({message: error.message})
     }
 })
+//
 
 //Get all Method
 router.get('/getAll', async (req, res) => {
