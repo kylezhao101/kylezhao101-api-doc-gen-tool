@@ -2,10 +2,11 @@ const express = require('express');
 const router = express.Router();
 const Model = require('../models/model');
 const Education = require('../models/Education');
+const Experience = require('../models/Experience');
 
 //Post Methods
 
-//Education
+//POST Education
 router.post('/education', async (req, res) => {
     const { institution, url, type, major, area, startDate, endDate } = req.body;
 
@@ -26,8 +27,26 @@ router.post('/education', async (req, res) => {
     catch (error) {
         res.status(400).json({message: error.message})
     }
-})
-//
+});
+//POST Experience
+router.post('/experience', async (req,res) => {
+    const { organization, position, startDate, endDate, description } = req.body;
+
+    const newExperience = new Experience({
+        organization,
+        position,
+        startDate,
+        endDate,
+        description,
+    });
+
+    try {
+        const savedExperience = await newExperience.save();
+        res.status(201).json(savedExperience);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
 
 //Get all Method
 router.get('/getAll', async (req, res) => {
@@ -38,7 +57,7 @@ router.get('/getAll', async (req, res) => {
     catch(error){
         res.status(500).json({message: error.message})
     }
-})
+});
 
 //Get by ID Method
 router.get('/getOne/:id', async (req, res) => {
@@ -49,7 +68,7 @@ router.get('/getOne/:id', async (req, res) => {
     catch(error){
         res.status(500).json({message: error.message})
     }
-})
+});
 
 //Update by ID Method
 router.patch('/update/:id', async (req, res) => {
@@ -67,7 +86,7 @@ router.patch('/update/:id', async (req, res) => {
     catch (error) {
         res.status(400).json({ message: error.message })
     }
-})
+});
 
 //Delete by ID Method
 router.delete('/delete/:id', async (req, res) => {
@@ -79,7 +98,7 @@ router.delete('/delete/:id', async (req, res) => {
     catch (error) {
         res.status(400).json({ message: error.message })
     }
-})
+});
 
 
-module.exports = router 
+module.exports = router;

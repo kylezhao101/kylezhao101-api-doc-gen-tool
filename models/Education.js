@@ -26,6 +26,6 @@ const educationSchema = new mongoose.Schema({
     endDate: {
         type: String
     }
-})
+});
 
-module.exports = mongoose.model('Education', educationSchema)
+module.exports = mongoose.model('Education', educationSchema);
