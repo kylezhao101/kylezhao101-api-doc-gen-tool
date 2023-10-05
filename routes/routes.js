@@ -3,6 +3,7 @@ const router = express.Router();
 const Model = require('../models/model');
 const Education = require('../models/Education');
 const Experience = require('../models/Experience');
+const Project = require('../models/Project');
 
 //Post Methods
 
@@ -43,6 +44,25 @@ router.post('/experience', async (req,res) => {
     try {
         const savedExperience = await newExperience.save();
         res.status(201).json(savedExperience);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
+//POST Project
+router.post('/project', async (req, res) => {
+    const { name, tech, range, description, url } = req.body;
+
+    const newProject = new Project({
+        name,
+        tech,
+        range,
+        description,
+        url,
+    });
+
+    try {
+        const savedProject = await newProject.save();
+        res.status(201).json(savedProject);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
