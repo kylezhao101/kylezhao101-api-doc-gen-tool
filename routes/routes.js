@@ -5,8 +5,38 @@ const Education = require('../models/Education');
 const Experience = require('../models/Experience');
 const Project = require('../models/Project');
 
-//Post Methods
+require('dotenv').config();
 
+// Middleware function to check API key
+function authenticateApiKey(req, res, next) {
+    const { apikey } = req.headers; 
+
+    if (!apikey) {
+      return res.status(401).json({ message: 'Unauthorized - API key missing' });
+    }
+  
+    const hashedApiKey = hashAPIKey(apikey);
+    const storedApiKeyHash = process.env.KYLE_HASHED_API_KEY; 
+  
+    if (hashedApiKey !== storedApiKeyHash) {
+      return res.status(403).json({ message: 'Forbidden - Invalid API key' });
+    }
+
+    next();
+}
+
+function hashAPIKey(apiKey) {
+    const { createHash } = require('crypto');
+  
+    const hashedAPIKey = createHash('sha256').update(apiKey).digest('hex');
+  
+    return hashedAPIKey;
+}
+
+//Post Methods
+router.use('/education', authenticateApiKey);
+router.use('/experience', authenticateApiKey);
+router.use('/project', authenticateApiKey);
 //POST Education
 router.post('/education', async (req, res) => {
     const { institution, url, type, major, area, startDate, endDate } = req.body;
