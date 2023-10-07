@@ -31,14 +31,11 @@ function hashAPIKey(apiKey) {
   
     return hashedAPIKey;
 }
-router.use('/education', authenticateApiKey);
-router.use('/experience', authenticateApiKey);
-router.use('/project', authenticateApiKey);
 
 //Post Methods
 
 //POST Education
-router.post('/education', async (req, res) => {
+router.post('/education', authenticateApiKey, async (req, res) => {
     const { institution, url, type, major, area, startDate, endDate } = req.body;
 
     const newEducation = new Education({
@@ -60,7 +57,7 @@ router.post('/education', async (req, res) => {
     }
 });
 //POST Experience
-router.post('/experience', async (req,res) => {
+router.post('/experience', authenticateApiKey, async (req,res) => {
     const { organization, position, startDate, endDate, description } = req.body;
 
     const newExperience = new Experience({
@@ -79,7 +76,7 @@ router.post('/experience', async (req,res) => {
     }
 });
 //POST Project
-router.post('/project', async (req, res) => {
+router.post('/project', authenticateApiKey, async (req, res) => {
     const { name, tech, range, description, url } = req.body;
 
     const newProject = new Project({
@@ -154,7 +151,7 @@ router.get('/getOne/:id', async (req, res) => {
 //Update methods
 
 // Update Education by ID
-router.patch('/education/:id', async (req, res) => {
+router.patch('/education/:id', authenticateApiKey, async (req, res) => {
     try {
         const id = req.params.id;
         const updatedData = req.body;
@@ -175,7 +172,7 @@ router.patch('/education/:id', async (req, res) => {
     }
 });
 // Update Experience by ID
-router.patch('/experience/:id', async (req, res) => {
+router.patch('/experience/:id', authenticateApiKey, async (req, res) => {
     try {
         const id = req.params.id;
         const updatedData = req.body;
@@ -196,7 +193,7 @@ router.patch('/experience/:id', async (req, res) => {
     }
 });
 // Update Project by ID
-router.patch('/project/:id', async (req, res) => {
+router.patch('/project/:id', authenticateApiKey, async (req, res) => {
     try {
         const id = req.params.id;
         const updatedData = req.body;
@@ -220,7 +217,7 @@ router.patch('/project/:id', async (req, res) => {
 //Delete Methods
 
 // Delete Education by ID
-router.delete('/education/:id', async (req, res) => {
+router.delete('/education/:id', authenticateApiKey, async (req, res) => {
     try {
         const id = req.params.id;
         const result = await Education.findByIdAndDelete(id);
@@ -235,7 +232,7 @@ router.delete('/education/:id', async (req, res) => {
     }
 });
 // Delete Experience by ID
-router.delete('/experience/:id', async (req, res) => {
+router.delete('/experience/:id', authenticateApiKey, async (req, res) => {
     try {
         const id = req.params.id;
         const result = await Experience.findByIdAndDelete(id);
@@ -250,7 +247,7 @@ router.delete('/experience/:id', async (req, res) => {
     }
 });
 // Delete Project by ID
-router.delete('/project/:id', async (req, res) => {
+router.delete('/project/:id', authenticateApiKey, async (req, res) => {
     try {
         const id = req.params.id;
         const result = await Project.findByIdAndDelete(id);
