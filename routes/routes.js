@@ -24,7 +24,6 @@ function authenticateApiKey(req, res, next) {
 
     next();
 }
-
 function hashAPIKey(apiKey) {
     const { createHash } = require('crypto');
   
@@ -32,11 +31,12 @@ function hashAPIKey(apiKey) {
   
     return hashedAPIKey;
 }
-
-//Post Methods
 router.use('/education', authenticateApiKey);
 router.use('/experience', authenticateApiKey);
 router.use('/project', authenticateApiKey);
+
+//Post Methods
+
 //POST Education
 router.post('/education', async (req, res) => {
     const { institution, url, type, major, area, startDate, endDate } = req.body;
@@ -120,21 +120,69 @@ router.get('/getOne/:id', async (req, res) => {
     }
 });
 
-//Update by ID Method
-router.patch('/update/:id', async (req, res) => {
+//Update methods
+
+// Update Education by ID
+router.patch('/education/:id', async (req, res) => {
     try {
         const id = req.params.id;
         const updatedData = req.body;
         const options = { new: true };
 
-        const result = await Model.findByIdAndUpdate(
+        const result = await Education.findByIdAndUpdate(
             id, updatedData, options
-        )
+        );
 
-        res.send(result)
+        if (!result) {
+            return res.status(404).json({ message: 'Education not found' });
+        }
+
+        res.send(result);
     }
     catch (error) {
-        res.status(400).json({ message: error.message })
+        res.status(400).json({ message: error.message });
+    }
+});
+// Update Experience by ID
+router.patch('/experience/:id', async (req, res) => {
+    try {
+        const id = req.params.id;
+        const updatedData = req.body;
+        const options = { new: true };
+
+        const result = await Experience.findByIdAndUpdate(
+            id, updatedData, options
+        );
+
+        if (!result) {
+            return res.status(404).json({ message: 'Experience not found' });
+        }
+
+        res.send(result);
+    }
+    catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
+// Update Project by ID
+router.patch('/project/:id', async (req, res) => {
+    try {
+        const id = req.params.id;
+        const updatedData = req.body;
+        const options = { new: true };
+
+        const result = await Project.findByIdAndUpdate(
+            id, updatedData, options
+        );
+
+        if (!result) {
+            return res.status(404).json({ message: 'Project not found' });
+        }
+
+        res.send(result);
+    }
+    catch (error) {
+        res.status(400).json({ message: error.message });
     }
 });
 
