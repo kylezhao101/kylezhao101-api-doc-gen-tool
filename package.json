@@ -2,7 +2,7 @@
   "name": "kylezhao101",
   "version": "1.0.0",
   "description": "<h1 align=\"left\">Hello 👋 I'm Kyle</h1>",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "devStart": "nodemon server.js"
   },
