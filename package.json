@@ -2,9 +2,9 @@
   "name": "kylezhao101",
   "version": "1.0.0",
   "description": "<h1 align=\"left\">Hello 👋 I'm Kyle</h1>",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
-    "devStart": "nodemon server.js"
+    "devStart": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -17,9 +17,9 @@
   },
   "homepage": "https://github.com/kylezhao101/kylezhao101#readme",
   "dependencies": {
+    "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "mongoose": "^7.5.3",
-    "mongodb": "^6.1.0"
+    "mongoose": "^7.5.3"
   },
   "devDependencies": {
     "dotenv": "^16.3.1",
