@@ -186,17 +186,52 @@ router.patch('/project/:id', async (req, res) => {
     }
 });
 
-//Delete by ID Method
-router.delete('/delete/:id', async (req, res) => {
+//Delete Methods
+
+// Delete Education by ID
+router.delete('/education/:id', async (req, res) => {
     try {
         const id = req.params.id;
-        const data = await Model.findByIdAndDelete(id)
-        res.send(`Document with ${data.name} has been deleted..`)
-    }
-    catch (error) {
-        res.status(400).json({ message: error.message })
+        const result = await Education.findByIdAndDelete(id);
+
+        if (!result) {
+            return res.status(404).json({ message: 'Education not found' });
+        }
+
+        res.send(`Education with ID ${id} has been deleted.`);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
     }
 });
+// Delete Experience by ID
+router.delete('/experience/:id', async (req, res) => {
+    try {
+        const id = req.params.id;
+        const result = await Experience.findByIdAndDelete(id);
 
+        if (!result) {
+            return res.status(404).json({ message: 'Experience not found' });
+        }
+
+        res.send(`Experience with ID ${id} has been deleted.`);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
+// Delete Project by ID
+router.delete('/project/:id', async (req, res) => {
+    try {
+        const id = req.params.id;
+        const result = await Project.findByIdAndDelete(id);
+
+        if (!result) {
+            return res.status(404).json({ message: 'Project not found' });
+        }
+
+        res.send(`Project with ID ${id} has been deleted.`);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
 
 module.exports = router;
