@@ -18,7 +18,8 @@
   "homepage": "https://github.com/kylezhao101/kylezhao101#readme",
   "dependencies": {
     "express": "^4.18.2",
-    "mongoose": "^7.5.3"
+    "mongoose": "^7.5.3",
+    "mongodb": "^6.1.0"
   },
   "devDependencies": {
     "dotenv": "^16.3.1",
