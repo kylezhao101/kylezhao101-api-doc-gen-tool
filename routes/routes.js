@@ -98,14 +98,45 @@ router.post('/project', async (req, res) => {
     }
 });
 
-//Get all Method
-router.get('/getAll', async (req, res) => {
-    try{
-        const data = await Model.find();
-        res.json(data)
+//Get Methods
+
+// Get all Education, Experience, and Projects
+router.get('/all', async (req, res) => {
+    try {
+        const education = await Education.find();
+        const experience = await Experience.find();
+        const projects = await Project.find();
+
+        res.json({ education, experience, projects });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
-    catch(error){
-        res.status(500).json({message: error.message})
+});
+// Get all Education
+router.get('/education', async (req, res) => {
+    try {
+        const education = await Education.find();
+        res.json(education);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+// Get all Experience
+router.get('/experience', async (req, res) => {
+    try {
+        const experience = await Experience.find();
+        res.json(experience);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+// Get all Projects
+router.get('/project', async (req, res) => {
+    try {
+        const projects = await Project.find();
+        res.json(projects);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
 });
 
