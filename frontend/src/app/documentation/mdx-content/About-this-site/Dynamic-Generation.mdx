@@ -1,0 +1,35 @@
+# Dynamic Site Generation Using MDX and Next.js
+
+This site leverages the power of MDX and Next.js to automate and enhance the documentation and article writing process, allowing for a seamless user experience and efficient content management.
+
+**1. Automated Navigation:** By organizing our content into MDX files within specific folders, the site automatically generates navigation elements. This setup allows each folder and MDX file to correspond to a unique section and page on the website, making it easy to expand or modify content.
+
+**2. Navbar Generation:** The dynamic routing and navigation mechanism ensures that the navigation bar is always up-to-date with new sections, making it effortless to navigate through the site.
+
+**3. Faster Documentation:** Writing articles or documentation using the MDX format combines the simplicity of Markdown with the flexibility of React components. The integration with 'next-mdx-remote' makes it possible to import custom components into the documentation, allowing for rich, interactive content that accelerates the creation process.
+
+These functionalities are primarily implemented in `fetchers.ts` and `sidebargenerator`.
+
+## Folder Structure Example
+
+
+
+```
+src/
+└── app/
+    └── documentation/
+        └── mdx-content/
+            └── about-this-site/
+                └── dynamic-site-generation.mdx
+            └── resume-api-endpoints/
+                └── all-data.mdx
+                └── education.mdx
+                └── experience.mdx
+                └── project.mdx
+```
+
+## Helpful Resources
+
+- [Next.js Documentation on Configuring MDX](https://nextjs.org/docs/pages/building-your-application/configuring/mdx)
+- [Next-MDX-Remote GitHub Repository](https://github.com/hashicorp/next-mdx-remote)
+- [GitHub Markdown CSS](https://github.com/sindresorhus/github-markdown-css)

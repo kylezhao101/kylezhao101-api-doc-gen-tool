@@ -1,0 +1,87 @@
+# Education
+
+The **Education** endpoint allows you to manage education records, providing options to create, update, delete, or retrieve them. The education records are structured in a schema with fields like institution name, type, major, and start/end dates.
+
+## Summary Table
+
+| **Method**   | **Endpoint**              | **Requires header `apikey`** | **Requires `:id`** |
+|--------------|---------------------------|-----------------------|--------------------|
+| <Badge variant="get">GET</Badge>    | `/api/education`           | No                    | No                 |
+| <Badge variant="post">POST</Badge>   | `/api/education`           | **Yes**                  | No                 |
+| <Badge variant="patch">PATCH</Badge>  | `/api/education/:id`       | **Yes**                   | **Yes**                |
+| <Badge variant="delete" >DELETE</Badge> | `/api/education/:id`       | **Yes**                   | **Yes**                |
+
+
+## Schema
+
+The education schema includes the following fields:
+
+- **institution** (String, Required): Name of the educational institution.
+- **url** (String, Required): The URL of the institution's website.
+- **type** (String, Required): The type of degree or diploma, e.g., "Bachelor of Science."
+- **major** (String, Required): The major field of study.
+- **area** (String, Optional): Additional description of the focus or specialization.
+- **startDate** (String, Optional): The starting date of the education period.
+- **endDate** (String, Optional): The ending date of the education period.
+
+# Usage 
+
+## <Badge variant="get">GET</Badge> Getting All Education Records
+
+**Endpoint:** `/api/education`  
+**Method:** `GET`  
+**Description:** Retrieves a list of all education records.
+
+## <Badge variant="post">POST</Badge> Creating a New Education Record
+
+**Endpoint:** `/api/education`  
+**Method:** `POST`  
+**Description:** Adds a new education record. Requires the `apikey` header.  
+**Headers:**
+
+- `apikey`: Your API key
+
+**Request Body Example:**
+
+```json
+{
+  "institution": "Simon Fraser University",
+  "url": "https://www.sfu.ca/siat.html",
+  "type": "Bachelors of Science",
+  "major": "Interactive Arts and Technology",
+  "area": "Interactive Systems",
+  "startDate": "2021-08-31",
+  "endDate": "Ongoing"
+}
+```
+
+## <Badge variant="patch">PATCH</Badge> Updating an Education Record
+
+**Endpoint:** `/api/education/:id`  
+**Method:** `PATCH`  
+**Description:** Updates an existing education record by its ID. Requires the `apikey` header.  
+**Headers:**
+
+- `apikey`: Your API key
+
+### Example usage
+```http
+GET https://kylezhao101-api.vercel.app/api/education/6636d2810248ff3a38dff866
+```
+
+**Request Body Example:**
+
+```json
+{
+  "institution": "Some other University",
+}
+```
+
+## <Badge variant="delete">DELETE</Badge> Deleting an Education Record
+
+**Endpoint:** `/api/education/:id`    
+**Method:** `DELETE`  
+**Description:** Deletes an existing education record by its ID. Requires the `apikey` header.  
+**Headers:**
+
+- `apikey`: Your API key

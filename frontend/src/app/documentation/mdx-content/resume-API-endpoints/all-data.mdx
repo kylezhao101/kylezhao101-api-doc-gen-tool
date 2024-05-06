@@ -1,0 +1,76 @@
+# All Data
+
+The **All** endpoint allows you to retrieve all information stored in the resume database. This includes educational background, professional experience, and project details.
+
+## Summary Table
+
+| **Method**   | **Endpoint**              | **Requires header `apikey`** | **Requires `:id`** |
+|--------------|---------------------------|-----------------------|--------------------|
+| <Badge variant="get">GET</Badge>    | `/api/all`           | No                    | No                 |
+
+# Usage 
+
+## <Badge variant="get">GET</Badge> Getting all information
+
+To fetch all data, send a `GET` request to the following URL:
+
+```http
+GET /api/all
+```
+
+## Details
+
+Each entry in the returned JSON will contain the following fields:
+
+- **education**: An array containing the educational background information.
+- **experience**: An array detailing the professional experience.
+- **projects**: An array of projects worked on.
+
+## Example JSON Response
+
+```json
+{
+    "education": [
+        {
+            "_id": "651df9f06395dee097e46108",
+            "institution": "Simon Fraser University",
+            "url": "https://www.sfu.ca/siat.html",
+            "type": "Bachelors of Science",
+            "major": "Interactive Arts and Technology",
+            "area": "Interactive Systems",
+            "startDate": "Tue Aug 31 2021 17:00:00 GMT-0700 (Pacific Daylight Saving Time)",
+            "endDate": "Ongoing",
+            "__v": 0
+        }
+    ],
+    "experience": [
+        {
+            "_id": "65a89e7d5dd816e003c05660",
+            "organization": "SFU Esports Association",
+            "position": "Graphic Design Club Executive",
+            "startDate": "2022",
+            "endDate": "Ongoing",
+            "description": "desc. here",
+            "__v": 0
+        }
+    ],
+    "projects": [
+    {
+            "_id": "65a89c725dd816e003c0564e",
+            "name": "VA11-Hall-A Drinktionary Fansite",
+            "tech": [
+                "React",
+                "Firebase",
+                "Tailwind",
+                "Python"
+            ],
+            "range": "08.2023",
+            "url": [
+                "https://github.com/kylezhao101/va11halla-drink-recipes"
+            ],
+            "__v": 0,
+            "description": "UI Design & Web Development"
+        }
+    ]
+}
+```
