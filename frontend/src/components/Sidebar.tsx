@@ -13,7 +13,7 @@ const Sidebar = () => {
           <ul>
             {section.links.map(link => (
               <li className="mb-2 pl-4 " key={link.name}>
-                <Link className="text-sm opacity-75" href={link.href}>
+                <Link className="text-sm opacity-75 hover:opacity-100" href={link.href}>
                   {link.name}
                 </Link>
               </li>
