@@ -21,6 +21,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/data/sidebarData.js", "src/app/pages/documentation.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/data/sidebarData.js", "src/app/pages/documentation.js", "src/app/documentation/layout.js", "src/components/MDXComponents.js"],
   "exclude": ["node_modules"]
 }

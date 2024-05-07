@@ -7,18 +7,19 @@ export const metadata: Metadata = {
 };
 
 export default function DocumentationLayout({
-  children, 
+  children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
-      <div className="flex px-28 pt-14">
-        <Sidebar />
-        <section className="ml-64 w-4/5 mb-20">
-          <div className="">
-            {children}
-          </div>          
-        </section>
-      </div>
+    <div className="flex px-28 pt-14">
+      <Sidebar />
+      <section className="ml-64 mr-64 mb-20">
+        <div>
+          {children}
+        </div>
+      </section>
+    </div>
   );
 }

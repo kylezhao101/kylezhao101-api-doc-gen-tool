@@ -3,12 +3,32 @@ import path from "path";
 import { compileMDX } from "next-mdx-remote/rsc";
 import { Badge } from "@/components/ui/badge";
 import remarkGfm from 'remark-gfm';
+import remarkToc from 'remark-toc';
+import rehypeSlug from 'rehype-slug';
+import { visit } from 'unist-util-visit';
+
 
 const contentDir = path.join(process.cwd(), "src/app/documentation/mdx-content");
 
 const components = {
   Badge,
 };
+
+// Helper function to extract headings
+function extractHeadings(markdownAST: any) {
+  const headings: { depth: any; text: any; }[] = [];
+  visit(markdownAST, "heading", (node) => {
+    const text = node.children
+      .filter((child: { type: string; }) => child.type === "text")
+      .map((child: { value: any; }) => child.value)
+      .join("");
+    headings.push({
+      depth: node.depth,
+      text,
+    });
+  });
+  return headings;
+}
 
 export async function getSectionBySlug(slug: string) {
   // Construct the path directly from the slug input
@@ -23,6 +43,7 @@ export async function getSectionBySlug(slug: string) {
 
   const fileContent = fs.readFileSync(filePath, "utf8"); // read file content
 
+  let headings: { depth: any; text: any; }[] = [];
   const { frontmatter, content } = await compileMDX<{
     title: string;
     author: string;
@@ -32,7 +53,16 @@ export async function getSectionBySlug(slug: string) {
     options: {
       parseFrontmatter: true,
       mdxOptions: {
-        remarkPlugins: [remarkGfm], 
+        remarkPlugins: [
+          [() => (tree) => {
+            headings = extractHeadings(tree);
+          }],
+          remarkGfm,
+          [remarkToc, { heading: 'Table of Contents', maxDepth: 3 }],
+        ], 
+        rehypePlugins: [
+          rehypeSlug,  
+        ],
       }, 
     },
     components: components,
@@ -40,6 +70,7 @@ export async function getSectionBySlug(slug: string) {
   return {
     frontmatter,
     content,
+    headings,
     slug: path.parse(fileName).name,
   };
 }

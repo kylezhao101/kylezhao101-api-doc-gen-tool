@@ -11,6 +11,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import React from "react";
+import { Separator } from "@/components/ui/separator"
 
 const contentDir = path.join(process.cwd(), "src/app/documentation/mdx-content");
 
@@ -58,6 +59,12 @@ export default async function BlogPage({
   const basePath = "/documentation";
   let accumulatedPath = basePath;
 
+  const toc = section.headings.map(({ text, depth }) => ({
+    text,
+    depth,
+    id: text.replace(/\s+/g, '-').toLowerCase(),
+  }));
+
   // Build the breadcrumb list dynamically
   const breadcrumbs = resolvedSlugArray.map((segment, index) => {
     accumulatedPath += `/${segment}`;
@@ -76,24 +83,42 @@ export default async function BlogPage({
     );
   });
 
-  return (
-    <main>
-      <Breadcrumb className="mb-5">
-        <BreadcrumbList>
-          <BreadcrumbItem>
-            <BreadcrumbLink href="/documentation/about-this-site/dynamic-generation">Docs</BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          {breadcrumbs.map((breadcrumb, index) => (
-            <React.Fragment key={index}>
-              {breadcrumb}
-              {index < breadcrumbs.length - 1 && <BreadcrumbSeparator />}
-            </React.Fragment>
-          ))}
-        </BreadcrumbList>
-      </Breadcrumb>
+  const tocList = toc?.map(({ text, depth, id }) => (
+    <li key={id} className="mb-2 text-sm opacity-75 hover:opacity-100" style={{ marginLeft: (depth - 1) * 16 }}>
+      <a href={`#${id}`}>{text}</a>
+    </li>
+  )) || null;
 
-      <article className="prose markdown-body">{section.content}</article>
-    </main>
+  return (
+    <div className="flex w-full gap-x-10">
+      <section>
+        <Breadcrumb className="mb-5">
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/documentation/about-this-site/dynamic-generation">Docs</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            {breadcrumbs.map((breadcrumb, index) => (
+              <React.Fragment key={index}>
+                {breadcrumb}
+                {index < breadcrumbs.length - 1 && <BreadcrumbSeparator />}
+              </React.Fragment>
+            ))}
+          </BreadcrumbList>
+        </Breadcrumb>
+        <article className="prose markdown-body">
+          {section.content}
+        </article>
+      </section>
+
+      {/* TOC Sidebar */}
+      {tocList && (
+        <aside className="min-w-64 sticky top-28 h-screen">
+          <h2 className="mb-3 text-sm font-semibold">On this page</h2>
+          <Separator className="mb-3" />
+          <ul>{tocList}</ul>
+        </aside>
+      )}
+    </div>
   );
 }
