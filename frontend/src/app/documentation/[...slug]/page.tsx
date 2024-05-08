@@ -90,8 +90,8 @@ export default async function BlogPage({
   )) || null;
 
   return (
-    <div className="flex w-full gap-x-10">
-      <section>
+    <div className="flex">
+      <section className="flex flex-col w-full">
         <Breadcrumb className="mb-5">
           <BreadcrumbList>
             <BreadcrumbItem>
@@ -106,19 +106,23 @@ export default async function BlogPage({
             ))}
           </BreadcrumbList>
         </Breadcrumb>
-        <article className="prose markdown-body">
-          {section.content}
-        </article>
+        <div className="min-w-0 md:max-w-5xl m-0 ">
+          <article className="object-contain markdown-body inline-block max-w-full ">
+            {section.content}
+          </article>
+        </div>
       </section>
 
       {/* TOC Sidebar */}
-      {tocList && (
-        <aside className="min-w-64 sticky top-28 h-screen">
-          <h2 className="mb-3 text-sm font-semibold">On this page</h2>
-          <Separator className="mb-3" />
-          <ul>{tocList}</ul>
-        </aside>
-      )}
-    </div>
+      {
+        tocList && (
+          <aside className="pl-10 hidden xl:block min-w-64 sticky top-28 h-screen">
+            <h2 className="mb-3 text-sm font-semibold">On this page</h2>
+            <Separator className="mb-3" />
+            <ul>{tocList}</ul>
+          </aside>
+        )
+      }
+    </div >
   );
 }

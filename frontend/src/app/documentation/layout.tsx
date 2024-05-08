@@ -13,13 +13,11 @@ export default function DocumentationLayout({
 }>) {
 
   return (
-    <div className="flex px-28 pt-14">
+    <div className="flex pt-14 w-full">
       <Sidebar />
-      <section className="ml-64 mr-64 mb-20">
-        <div>
-          {children}
-        </div>
-      </section>
+      <div className="container mb-20">
+        {children}
+      </div>
     </div>
   );
 }

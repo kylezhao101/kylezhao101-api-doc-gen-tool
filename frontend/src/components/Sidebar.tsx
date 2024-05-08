@@ -6,7 +6,7 @@ const Sidebar = () => {
   const sidebarData = generateSidebarData();
 
   return (
-    <div className="w-64 fixed">
+    <div className="hidden lg:block min-w-fit sticky top-28 h-screen w-60">
       {sidebarData.map((section) => (
         <div key={section.title} className='mb-4'>
           <h3 className="mb-3 text-sm font-semibold">{section.title}</h3>
