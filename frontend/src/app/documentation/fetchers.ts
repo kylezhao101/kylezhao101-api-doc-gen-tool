@@ -6,7 +6,8 @@ import remarkGfm from 'remark-gfm';
 import remarkToc from 'remark-toc';
 import rehypeSlug from 'rehype-slug';
 import { visit } from 'unist-util-visit';
-
+import { readdirSync } from "fs";
+import { join, parse } from "path";
 
 const contentDir = path.join(process.cwd(), "src/app/documentation/mdx-content");
 
@@ -75,23 +76,56 @@ export async function getSectionBySlug(slug: string) {
   };
 }
 
-export async function getAllSections() {
-  const files = fs.readdirSync(contentDir);
-  const sections = await Promise.all(
-    files.map(async (file) => await getSectionBySlug(path.parse(file).name))
-  );
-  return sections;
+async function getTitleOrName(slug: string): Promise<string> {
+  try {
+    const section = await getSectionBySlug(slug);
+    return section.frontmatter.title || slug.split('/').pop()!.replace(/-/g, ' ');
+  } catch {
+    // Return the formatted name in case of errors
+    return slug.split('/').pop()!.replace(/-/g, ' ');
+  }
 }
 
-export function getAllSectionSlugs() {
-  // Assuming that `resume-api-endpoints` and other directories have pre-determined slugs
-  const predefinedPaths = [
-    'resume-api-endpoints/all',
-    'resume-api-endpoints/education',
-    'resume-api-endpoints/experience',
-    'resume-api-endpoints/project',
-    'authentication/api-key-check',
-  ];
+// Recursive function to collect all .mdx slugs
+function collectSlugs(dir: string, base: string): string[] {
+  const items = fs.readdirSync(dir);
+  let slugs: string[] = [];
 
-  return predefinedPaths.map((slug) => ({ slug }));
+  items.forEach((item) => {
+    const fullPath = path.join(dir, item);
+    let relativePath = path.join(base, path.parse(item).name);
+
+    relativePath = relativePath.replace(/\\/g, "/");
+
+    if (fs.statSync(fullPath).isDirectory()) {
+      // If the item is a directory, recurse with the relative path as the base
+      slugs = slugs.concat(collectSlugs(fullPath, relativePath));
+    } else if (item.endsWith(".mdx")) {
+      // If it's an MDX file, add its relative path (as a slug) to the list
+      slugs.push(relativePath);
+    }
+  });
+
+  return slugs;
+}
+
+// Exported function to initiate slug collection
+export function getAllSectionSlugs(): string[] {
+  return collectSlugs(contentDir, "");
+}
+
+export async function getAdjacentSlugsWithTitles(slug: string) {
+  const allSlugs = getAllSectionSlugs();
+  const currentIndex = allSlugs.indexOf(slug);
+
+  const previousSlug = currentIndex > 0 ? allSlugs[currentIndex - 1] : null;
+  const nextSlug = currentIndex < allSlugs.length - 1 ? allSlugs[currentIndex + 1] : null;
+
+  const previousTitle = previousSlug ? await getTitleOrName(previousSlug) : null;
+  const nextTitle = nextSlug ? await getTitleOrName(nextSlug) : null;
+
+  return {
+    previous: previousSlug ? { slug: previousSlug, title: previousTitle } : null,
+    next: nextSlug ? { slug: nextSlug, title: nextTitle } : null,
+  };
 }

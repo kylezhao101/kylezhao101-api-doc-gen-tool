@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { getSectionBySlug } from "../fetchers";
+import { getSectionBySlug, getAdjacentSlugsWithTitles, getAllSectionSlugs } from "../fetchers";
 import 'github-markdown-css/github-markdown-light.css';
 import {
   Breadcrumb,
@@ -10,8 +10,11 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
+import { Button } from "@/components/ui/button"
+import { ChevronRight, ChevronLeft } from "lucide-react"
 import React from "react";
 import { Separator } from "@/components/ui/separator"
+import Link from "next/link";
 
 const contentDir = path.join(process.cwd(), "src/app/documentation/mdx-content");
 
@@ -55,6 +58,11 @@ export default async function BlogPage({
   // Retrieve the content based on the adjusted slug path
   const section = await getSectionBySlug(combinedSlug);
 
+  const { previous, next } = await getAdjacentSlugsWithTitles(combinedSlug);
+  // Construct URLs for previous and next links
+  const previousLink = previous ? `/documentation/${previous.slug}` : null;
+  const nextLink = next ? `/documentation/${next.slug}` : null;
+
   // Create base path for the breadcrumbs
   const basePath = "/documentation";
   let accumulatedPath = basePath;
@@ -91,8 +99,8 @@ export default async function BlogPage({
 
   return (
     <div className="flex">
-      <section className="flex flex-col w-full">
-        <Breadcrumb className="mb-5">
+      <section className="flex flex-col w-full gap-y-8">
+        <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink href="/documentation/about-this-site/dynamic-generation">Docs</BreadcrumbLink>
@@ -106,10 +114,32 @@ export default async function BlogPage({
             ))}
           </BreadcrumbList>
         </Breadcrumb>
+
         <div className="min-w-0 md:max-w-5xl m-0 ">
           <article className="object-contain markdown-body inline-block max-w-full ">
             {section.content}
           </article>
+        </div>
+
+        <div className="mt-14 flex justify-between">
+          {previousLink ? (
+            <Button asChild variant="outline">
+              <Link href={previousLink}>
+                <ChevronLeft className="h-4 w-4" /> {previous?.title}
+              </Link>
+            </Button>
+          ) : (
+            <div />
+          )}
+          {nextLink ? (
+            <Button asChild variant="outline">
+              <Link href={nextLink}>
+                {next?.title} <ChevronRight className="h-4 w-4" />
+              </Link>
+            </Button>
+          ) : (
+            <div />
+          )}
         </div>
       </section>
 
