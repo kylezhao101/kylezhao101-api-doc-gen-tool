@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { getSectionBySlug, getAdjacentSlugsWithTitles, getAllSectionSlugs } from "../fetchers";
+import { getSectionBySlug, getAdjacentSlugsWithTitles } from "../fetchers";
 import 'github-markdown-css/github-markdown-light.css';
 import {
   Breadcrumb,
@@ -57,6 +57,7 @@ export default async function BlogPage({
 
   // Retrieve the content based on the adjusted slug path
   const section = await getSectionBySlug(combinedSlug);
+  console.log(combinedSlug)
 
   const { previous, next } = await getAdjacentSlugsWithTitles(combinedSlug);
   // Construct URLs for previous and next links

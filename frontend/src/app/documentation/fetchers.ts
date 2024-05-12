@@ -115,14 +115,21 @@ export function getAllSectionSlugs(): string[] {
 }
 
 export async function getAdjacentSlugsWithTitles(slug: string) {
-  const allSlugs = getAllSectionSlugs();
+  const lowerSlug = slug.toLowerCase();
+
+  const allSlugs = getAllSectionSlugs().map(s => s.toLowerCase());
+
+  console.log(allSlugs)
   const currentIndex = allSlugs.indexOf(slug);
+  console.log(currentIndex)
 
   const previousSlug = currentIndex > 0 ? allSlugs[currentIndex - 1] : null;
   const nextSlug = currentIndex < allSlugs.length - 1 ? allSlugs[currentIndex + 1] : null;
 
   const previousTitle = previousSlug ? await getTitleOrName(previousSlug) : null;
   const nextTitle = nextSlug ? await getTitleOrName(nextSlug) : null;
+
+  console.log(previousTitle, nextTitle)
 
   return {
     previous: previousSlug ? { slug: previousSlug, title: previousTitle } : null,
