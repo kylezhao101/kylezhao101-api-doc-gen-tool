@@ -1,6 +1,27 @@
 import fs from 'fs';
 import path from 'path';
 
+
+export async function GET(request: Request) {
+
+    try {
+        const data = await generateSidebarData();
+        return new Response(JSON.stringify(data), {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    } catch (error) {
+        return new Response(JSON.stringify({ error: 'Failed to generate sidebar data' }), {
+            status: 500,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    }
+}
+
+
 const contentDir = path.join(process.cwd(), 'src/app/documentation/mdx-content');
 
 // Function to replace hyphens with spaces and capitalize each word

@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import React, { useEffect, useState } from 'react';
-import { MenuIcon } from 'lucide-react';
+import { MenuIcon, GithubIcon } from 'lucide-react';
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -70,7 +70,7 @@ export default function Navbar() {
           <ul className='flex space-x-6 items-center'>
             <li>
               <Link className="text-sm" href="https://github.com/kylezhao101/kylezhao101-api">
-                Github icon here
+                <GithubIcon></GithubIcon>
               </Link>
             </li>
           </ul>
