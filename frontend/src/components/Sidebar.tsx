@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { generateSidebarData } from '@/app/documentation/sidebarGenerator';
+import { generateSidebarData } from '@/sidebarGenerator';
 
 const Sidebar = () => {
   // Generate the sidebar data dynamically

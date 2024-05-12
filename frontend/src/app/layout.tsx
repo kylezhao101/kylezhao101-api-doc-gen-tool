@@ -25,7 +25,7 @@ export default function RootLayout({
         <div className="lg:container">
           {children}
         </div>
-        <Separator className="mb-3" />
+        <Separator className="" />
         <Footer />
       </body>
     </html>
