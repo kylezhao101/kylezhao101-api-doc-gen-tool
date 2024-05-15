@@ -3,8 +3,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 export default function Footer() {
     return (
-        <nav className="w-full min-h-14 py-5 p-2 z-10">
-            <div className='h-full flex  justify-between md:max-w-screen-2xl mx-8 md:mx-auto'>
+        <nav className="w-full min-h-14 py-5 z-10">
+            <div className='h-full flex justify-between md:max-w-screen-2xl mx-auto px-5'>
 
                 <ul className="flex flex-col sm:flex-row sm:space-x-6 ">
 

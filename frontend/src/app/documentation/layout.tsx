@@ -13,9 +13,9 @@ export default function DocumentationLayout({
 }>) {
 
   return (
-    <div className="flex pt-20 lg:pt-14 w-full">
+    <div className="flex">
       <Sidebar />
-      <div className="container mb-20">
+      <div className="container pl-5 pr-5 mb-20">
         {children}
       </div>
     </div>

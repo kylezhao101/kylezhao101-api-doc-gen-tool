@@ -32,7 +32,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="w-full h-14 z-30 fixed border-b px-8 bg-white bg-opacity-10 backdrop-blur">
+      <nav className="w-full h-14 z-30 fixed border-b px-5 bg-white bg-opacity-10 backdrop-blur">
         <div className='flex h-full justify-between md:max-w-screen-2xl md:mx-auto'>
 
           <button className="md:hidden flex items-center gap-x-2" onClick={toggleMobileMenu}>
@@ -79,7 +79,7 @@ export default function Navbar() {
 
       <div className={`fixed inset-0 bg-black bg-opacity-60 z-40 transition-opacity ${isMobileMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`} onClick={toggleMobileMenu}></div>
 
-      <div className={`transform top-0 left-0 min-w-64 bg-white p-6 fixed h-full overflow-auto ease-in-out transition-all duration-300 z-40 ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+      <div className={`transform top-0 left-0 min-w-64 bg-white p-5 fixed h-full overflow-auto ease-in-out transition-all duration-300 z-40 ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
         <ul className='flex flex-col gap-2'>
           <li className="mb-2">
             <Link onClick={toggleMobileMenu} href="/">

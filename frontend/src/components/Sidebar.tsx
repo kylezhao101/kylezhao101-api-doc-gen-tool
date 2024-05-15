@@ -54,7 +54,7 @@ const Sidebar = () => {
 
   return (
     <>
-      <button onClick={toggleSidebar} className="h-10 lg:hidden px-8 fixed w-full top-14 left z-20 bg-white bg-opacity-10 backdrop-blur border-b">
+      <button onClick={toggleSidebar} className="h-10 lg:hidden px-5 fixed w-full top-14 left z-20 bg-white bg-opacity-10 backdrop-blur border-b">
         <span className={"flex text-sm items-center gap-x-4"}>
           <ChevronRight style={{ transform: isOpen ? 'rotate(90deg)' : 'none' }} size={16} /> Documentation Menu
         </span>
@@ -62,11 +62,11 @@ const Sidebar = () => {
 
       <div className={`lg:hidden fixed w-full h-screen top-0 pt-28 left-0 z-10 transform ${isOpen ? "translate-y-0" : "-translate-y-full"} transition-transform duration-500 ease-in-out bg-white z-10`}>
         {sidebarData.map((section) => (
-          <div key={section.title} className='ml-8 mb-4'>
+          <div key={section.title} className='ml-5 mb-4'>
             <h3 className="mb-3 text-sm font-semibold">{section.title}</h3>
             <ul>
               {section.links.map(link => (
-                <li className="mb-2 pl-4" key={link.name}>
+                <li className="mb-2 pl-5" key={link.name}>
                   <Link className="text-sm opacity-75 hover:opacity-100" href={link.href} onClick={closeSidebar}>
                     {link.name}
                   </Link>
