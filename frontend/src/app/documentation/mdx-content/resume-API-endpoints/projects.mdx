@@ -1,0 +1,86 @@
+# Projects
+
+The **Projects** endpoint allows you to manage project records. You can create, update, delete, or retrieve them. Each project record has fields like name, technologies used, project duration, description, and project URLs.
+
+## Summary Table
+
+| **Method**   | **Endpoint**              | **Requires `apikey` Header** | **Requires `:id`** |
+|--------------|---------------------------|-----------------------|--------------------|
+| <Badge variant="get">GET</Badge>    | `/api/projects`           | No                    | No                 |
+| <Badge variant="post">POST</Badge>   | `/api/projects`           | **Yes**                  | No                 |
+| <Badge variant="patch">PATCH</Badge>  | `/api/projects/:id`       | **Yes**                   | **Yes**                |
+| <Badge variant="delete">DELETE</Badge> | `/api/projects/:id`       | **Yes**                   | **Yes**                |
+
+## Schema
+
+The project schema includes the following fields:
+
+- **name** (String, Required): Name of the project.
+- **tech** (Array of Strings, Required): A list of technologies used in the project.
+- **range** (String, Required): The project timeline or duration.
+- **description** (String, Optional): A brief description of the project.
+- **url** (Array of Strings, Required): URLs associated with the project.
+
+# Usage
+
+## Getting All Project Records
+
+**Endpoint:** `/api/projects`  
+**Method:** <Badge variant="get">GET</Badge><br />
+**Description:** Retrieves a list of all project records.
+
+## Creating a New Project Record
+
+**Endpoint:** `/api/projects`  
+**Method:** <Badge variant="post">POST</Badge><br />
+**Description:** Adds a new project record. Requires the `apikey` header.  
+**Headers:**
+
+- `apikey`: Your API key
+
+**Request Body Example:**
+
+```json
+{
+  "name": "VA11-Hall-A Drinktionary Fansite",
+  "tech": [
+    "React",
+    "Firebase",
+    "Tailwind",
+    "Python"
+  ],
+  "range": "08.2023",
+  "url": [
+    "https://github.com/kylezhao101/va11halla-drink-recipes"
+  ],
+  "description": "UI Design & Web Development"
+}
+```
+
+## Updating a Project Record
+
+**Endpoint:** `/api/projects/:id`  
+**Method:** <Badge variant="patch">PATCH</Badge> <br />  
+**Description:** Updates an existing project record by its ID. Requires the `apikey` header.  
+**Headers:**
+
+- `apikey`: Your API key
+
+**Request Body Example:**
+
+```json
+{
+  "name": "Updated Project Name",
+  "tech": ["React", "Node.js"],
+  "description": "Updated project description."
+}
+```
+
+## Deleting a Project Record
+
+**Endpoint:** `/api/projects/:id`    
+**Method:** <Badge variant="delete">DELETE</Badge><br /> 
+**Description:** Deletes an existing project record by its ID. Requires the `apikey` header.  
+**Headers:**
+
+- `apikey`: Your API key
