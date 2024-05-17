@@ -1,7 +1,8 @@
 
 # Kylezhao101-api
+Documentation URL: [https://kylezhao101-api-doc.vercel.app](kylezhao101-api-doc.vercel.app)
 
-[https://kylezhao101-api.vercel.app/api/all](https://kylezhao101-api.vercel.app/api/all)
+API URL: [https://kylezhao101-api.vercel.app/api/all](https://kylezhao101-api.vercel.app/api/all)
 
 An API backend service that provides access to my resume and other related information stored on mongoDB.
 
