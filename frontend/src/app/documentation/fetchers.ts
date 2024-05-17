@@ -6,8 +6,7 @@ import remarkGfm from 'remark-gfm';
 import remarkToc from 'remark-toc';
 import rehypeSlug from 'rehype-slug';
 import { visit } from 'unist-util-visit';
-import { readdirSync } from "fs";
-import { join, parse } from "path";
+
 
 const contentDir = path.join(process.cwd(), "src/app/documentation/mdx-content");
 
