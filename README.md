@@ -1,6 +1,6 @@
 
 # Kylezhao101-api
-Documentation URL: [https://kylezhao101-api-doc.vercel.app](kylezhao101-api-doc.vercel.app)
+Documentation URL: [https://kylezhao101-api-doc.vercel.app](https://kylezhao101-api-doc.vercel.app)
 
 API URL: [https://kylezhao101-api.vercel.app/api/all](https://kylezhao101-api.vercel.app/api/all)
 
