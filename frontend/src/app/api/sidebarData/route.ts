@@ -1,51 +1,36 @@
-import fs from 'fs';
+import fs from 'fs/promises';
 import path from 'path';
+import { NextRequest, NextResponse } from 'next/server';
 
-
-export async function GET(request: Request) {
-
-    try {
-        const data = await generateSidebarData();
-        return new Response(JSON.stringify(data), {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-    } catch (error) {
-        return new Response(JSON.stringify({ error: 'Failed to generate sidebar data' }), {
-            status: 500,
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-    }
+// Type definitions
+interface SidebarLink {
+  name: string;
+  href: string;
 }
 
+interface SidebarSection {
+  title: string;
+  links: SidebarLink[];
+}
 
 const contentDir = path.join(process.cwd(), 'src/app/documentation/mdx-content');
 
 // Function to replace hyphens with spaces and capitalize each word
-function formatTitle(name: string) {
+function formatTitle(name: string): string {
   return name.replace(/-/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase());
 }
 
 // Generates the sidebar data dynamically
-export function generateSidebarData() {
-  const sections = fs.readdirSync(contentDir, { withFileTypes: true });
-  const sidebarData: {
-      title: string; // Convert folder name to a title
-      links: {
-          name: string; // Convert to a readable name
-          href: string;
-      }[];
-  }[] = [];
+async function generateSidebarData(): Promise<SidebarSection[]> {
+  const entries = await fs.readdir(contentDir, { withFileTypes: true });
+  const sidebarData: SidebarSection[] = [];
 
-  sections.forEach((entry) => {
+  for (const entry of entries) {
     if (entry.isDirectory()) {
       const folderName = entry.name;
-      const files = fs.readdirSync(path.join(contentDir, folderName));
+      const files = await fs.readdir(path.join(contentDir, folderName));
 
-      const links = files
+      const links: SidebarLink[] = files
         .filter((file) => file.endsWith('.mdx'))
         .map((file) => {
           const name = path.parse(file).name;
@@ -60,7 +45,16 @@ export function generateSidebarData() {
         links,
       });
     }
-  });
+  }
 
   return sidebarData;
+}
+
+export async function GET(request: NextRequest): Promise<NextResponse> {
+  try {
+    const data = await generateSidebarData();
+    return NextResponse.json(data);
+  } catch (error) {
+    return NextResponse.json({ error: 'Failed to generate sidebar data' }, { status: 500 });
+  }
 }

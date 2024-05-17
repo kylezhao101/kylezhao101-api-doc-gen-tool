@@ -13,7 +13,7 @@ export default function Home() {
             <div className="flex flex-col">
               {/* Hero Title */}
               <h1 className="mb-4 text-3xl font-semibold md:text-5xl">
-                Kylezhao101's API & Docs Generator
+                Kylezhao101&apos;s API & Docs Generator
               </h1>
               <p className="mb-6 max-w-lg text-sm text-gray-500 sm:text-base md:mb-10 lg:mb-12">
                 Hi, this site is the documentation for my personal Resume API, generated using MDX to create dynamic navigation functionalities.
